@@ -4,10 +4,16 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'NewCollection.postman_collection.json' # Tu colección
+      - '.github/workflows/api-tests.yml'        # El propio pipeline
   pull_request:
     branches:
       - main
-  workflow_dispatch: # Permite la ejecución manual del flujo de trabajo
+    paths:
+      - 'NewCollection.postman_collection.json'
+      - '.github/workflows/api-tests.yml'
+  workflow_dispatch: # Mantiene el botón manual por si acaso
 
 jobs:
   newman-tests:
@@ -15,15 +21,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Versión más reciente
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4 # Versión más reciente
         with:
-          node-version: '18' # Usa la versión de Node.js que prefieras
-
-      - name: Clear Cache
-        run: rm -rf ~/.cache
+          node-version: '18'
 
       - name: Install Newman and htmlextra
         run: |
